@@ -131,12 +131,17 @@ def get_t_file(filename):
     # print(time_tim)
     f_t = open('{}.t'.format(filename),'w+')
     f_tid = open('{}.tid'.format(filename),'w+')
+    f_early_eight_tid = open('{}-eight.tid'.format(filename), 'w+')
+    f_early_eight_tid.write('--------\n')
     for data in list_data:
         time_w = datetime.datetime.strftime(time_tim,'%H:%M')
         tide = format(eval(data)/100,'0.2f')
         f_t.write('"{}",{}\n'.format(time_w, tide))
+
         tide_w = '{:0>3d}'.format(int(eval(data)))
         f_tid.write('{day}.{moth}.{year} {time}:00 {tied}\n'.format(day = filename[-2:],moth = filename[-5:-3],year = filename[-10:-6],time = time_w,tied =tide_w ))
+        time_eight=time_tim - datetime.timedelta(hours=8)
+        f_early_eight_tid.write('{year}/{moth}/{day} {hour}:{minutes}:{sec} {tide}/n'.format(year = time_eight.year, moth=time_eight.month, day=time_eight.day, hour=time_eight.hour, minutes=time_eight.minute,sec=time_eight.second, tide = tide))
         time_tim = time_tim +datetime.timedelta(minutes = 10)
     f_t.close()
     f_tid.close()
@@ -169,25 +174,28 @@ def get_port_code_and_data_file():
             break
 
 
+def awayls_do():
+    while True:
+        dict_presentations = {
+        "福建":"5359678358229842731",
+        "广西":"5181903535968969393",
+        "广州":"5413705892610612211",
+        "海南":"5625484080778443327",
+        "河北":"4975833679728738945",
+        "江苏":"5293027798039637126",
+        "辽宁":"5432072060831556751",
+        "山东":"5323306066487582247",
+        "上海":"5653349478231077601",
+        "台湾":"4876987809364790815",
+        "天津":"4935741873097441187",
+        "浙江":"4845586374601047334"
+        }
 
-dict_presentations = {
-"福建":"5359678358229842731",
-"广西":"5181903535968969393",
-"广州":"5413705892610612211",
-"海南":"5625484080778443327",
-"河北":"4975833679728738945",
-"江苏":"5293027798039637126",
-"辽宁":"5432072060831556751",
-"山东":"5323306066487582247",
-"上海":"5653349478231077601",
-"台湾":"4876987809364790815",
-"天津":"4935741873097441187",
-"浙江":"4845586374601047334"
-}
 
+        print(str(dict_presentations.keys())[9:])
+        presentation_name = input('Put in name of presentation:')
+        pres_id = dict_presentations[presentation_name]
+        get_dir_code(pres_id)
+        get_port_code_and_data_file()
 
-print(str(dict_presentations.keys())[9:])
-presentation_name = input('Put in name of presentation:')
-pres_id = dict_presentations[presentation_name]
-get_dir_code(pres_id)
-get_port_code_and_data_file()
+awayls_do()
