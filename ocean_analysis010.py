@@ -141,7 +141,8 @@ def get_t_file(filename):
         tide_w = '{:0>3d}'.format(int(eval(data)))
         f_tid.write('{day}.{moth}.{year} {time}:00 {tied}\n'.format(day = filename[-2:],moth = filename[-5:-3],year = filename[-10:-6],time = time_w,tied =tide_w ))
         time_eight=time_tim - datetime.timedelta(hours=8)
-        f_early_eight_tid.write('{year}/{moth}/{day} {hour}:{minutes}:{sec} {tide}/n'.format(year = time_eight.year, moth=time_eight.month, day=time_eight.day, hour=time_eight.hour, minutes=time_eight.minute,sec=time_eight.second, tide = tide))
+
+        f_early_eight_tid.write('{year}/{moth}/{day} {hour}:{minutes}:{sec} {tide}\n'.format(year = time_eight.year, moth=time_eight.month, day=time_eight.day, hour=time_eight.hour, minutes=str(time_eight.minute).zfill(2),sec=str(time_eight.second).zfill(2), tide = tide))
         time_tim = time_tim +datetime.timedelta(minutes = 10)
     f_t.close()
     f_tid.close()
