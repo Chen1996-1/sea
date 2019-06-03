@@ -1,5 +1,5 @@
 # sea
-forecast-tide-analysisPro，之前版本的完善版
+forecast-tide-analysisPro，之前版本https://github.com/Chen1996-1/Forecast-tide-fitting.git 的完善版，数据来源于中国海事信息网http://mds.nmdis.org.cn/ 
 # 用法
 * 直接下载dist/下的exe文件到本地
 * 双击运行
