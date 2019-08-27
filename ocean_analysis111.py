@@ -54,6 +54,7 @@ def get_ocean_json_data(data):
     response = requests.post(url,data)
     text = response.text
     data_json = json.loads(text)
+    print(data_json)
     # print(data_json)
     file_tile = data_json.get('fileinfo').get('Title')
     file_info = data_json.get('fileinfo')
@@ -61,8 +62,11 @@ def get_ocean_json_data(data):
     # print(file_data[0].get('Day'))
 
     date = '{}-{}-{}'.format(file_info.get('Year'),file_info.get('Month').zfill(2),str(file_data[0].get('Day')).zfill(2))
-
-    file_name = file_tile+date
+    print(date)
+    file_name= re.sub(r'[() （）]', '', file_tile)+date
+    # print(file_tile, file_name_f)
+    # file_name = re.sub(r'[()]', '', '(niggg)')
+    # print(file_name)
     f = open(file_name+'.txt','w+')
     for i in range(0,25):
 
@@ -137,7 +141,9 @@ def mtplb(y_list,file_name):
 
     plt.legend(loc='upper left')
     plt.grid(True)
+    plt.savefig('{}.png'.format(file_name))
     plt.show()
+
 
 def get_t_file(filename):
     f = open('{}-plot-tide.txt'.format(filename))
@@ -191,12 +197,13 @@ def get_port_code_and_data_file():
                 else:
                     # date = '2019-06-01'
                     data = {
-                        'PortCode':code,
                         'Date':date, 
+                        'PortCode':code,
                         'Type':0,
                     }
+                    print(data)
                     get_ocean_json_data(data)
-                    file_name = name_port+date
+                    file_name = re.sub(r'[()]','',name_port)+date
                     y_list = get_flie_data(file_name)
                     mtplb(y_list, file_name)
                     get_t_file(file_name)
